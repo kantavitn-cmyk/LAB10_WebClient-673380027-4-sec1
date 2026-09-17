@@ -45,6 +45,8 @@ public class ProductController {
     @GetMapping("/{id}")
     public Mono<Product> getById(@PathVariable String id) {
         return service.getById(id);
+
+        // @PathVariable นำ ID จาก URL มาใส่ในตัวแปร id แล้วก็เรียกใช้ service เพื่อไปทำงานต่อให้ได้ product ตาม id มาโดยคืนค่าเป็น Mono<Product>
     }
 
     // ══════════════════════════════════════════════════════
@@ -63,6 +65,8 @@ public class ProductController {
         // TODO: เติม code ตรงนี้
         Flux<Product> proFlux = service.getAll();
         return proFlux; // ← แก้บรรทัดนี้
+
+        // Controller คืน Flux<Product> ให้ Spring WebFlux จากนั้น Spring จะ subscribe และแปลงข้อมูลเป็น JSON response โดยอัตโนมัติ  
     }
 
     /**
@@ -78,6 +82,8 @@ public class ProductController {
         // TODO: เติม code ตรงนี้
         Mono<Product> prMono = service.save(product);
         return prMono; // ← แก้บรรทัดนี้
+
+        // @RequestBody แปลง JSON request เป็น Product object แล้วส่งให้ Service บันทึก
     }
 
     /**
@@ -92,6 +98,8 @@ public class ProductController {
         // TODO: เติม code ตรงนี้
         Mono<Void> delprMono = service.delete(id);
         return delprMono; // ← แก้บรรทัดนี้
+
+        // @PathVariable นำ ID จาก URL มาใส่ในตัวแปร id แล้วลบ Product โดยใช้ ID 
     }
 
     /**
@@ -106,6 +114,8 @@ public class ProductController {
         // TODO: เติม code ตรงนี้
         Flux<Product> proFlux = service.getByCategory(category);
         return proFlux; // ← แก้บรรทัดนี้
+
+        // @PathVariable นำ แฟะำเนพั จาก URL มาใส่ในตัวแปร category แล้วไปเรียกใช้หาโดยคัดกรอง category 
     }
 
     /**
@@ -120,5 +130,7 @@ public class ProductController {
         // TODO: เติม code ตรงนี้
         Mono<Double> prdiscount = service.getDiscountedPrice(id);
         return prdiscount; // ← แก้บรรทัดนี้
+
+        // @PathVariable นำ ID จาก URL มาใส่ในตัวแปร id แล้วไปเรียกใช้ service.getDiscountedPrice() เพื่อเอาราคาหลังลดราคา
     }
 }

@@ -90,6 +90,8 @@ public class ProductWebClient {
     public Mono<Void> deleteProduct(String id) {
         // TODO: เติม code ตรงนี้
         return client.delete().uri("/products/{id}", id).retrieve().bodyToMono(Void.class); // ← แก้บรรทัดนี้
+
+        
     }
 
     /**

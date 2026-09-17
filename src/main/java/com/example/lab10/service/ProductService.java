@@ -46,6 +46,8 @@ public class ProductService {
         // TODO: เติม code ตรงนี้
 
         return repository.findById(id).switchIfEmpty( Mono.error(new RuntimeException("Product not found: " + id))); // ← แก้บรรทัดนี้
+
+        // Getbyid ไปเรียกจาก repository หาก Repository คืน Mono.empty() จะใช้ switchIfEmpty() เปลี่ยนเป็น error
     }
 
     // ── 2. ดึง Product ทั้งหมด ───────────────────────────
@@ -56,6 +58,8 @@ public class ProductService {
         // TODO: เติม code ตรงนี้
         Flux<Product> productFlux = repository.findAll();
         return productFlux; // ← แก้บรรทัดนี้
+
+        // ขอสินค้าทั้งหมดคืนเป็น Flux เพราะอาจมี0ถึงหลายรายการ
     }
 
     // ── 3. บันทึก Product ────────────────────────────────
@@ -76,6 +80,8 @@ public class ProductService {
 
         Mono<Product> savedProductMono = repository.save(product);
         return savedProductMono; // ← แก้บรรทัดนี้
+
+        // บันทึกสินค้าโดยถ้าสินค้าไม่มี ID จะสร้าง UUID ก่อนบันทึก แล้วคืนสินค้าที่บันทึกแล้วเป็น Mono<Produtc>
     }
 
     // ── 4. ลบ Product ────────────────────────────────────
@@ -87,6 +93,8 @@ public class ProductService {
         Mono<Void> deleteResultMono = repository.deleteById(id);
 
         return deleteResultMono; // ← แก้บรรทัดนี้
+
+        // ส่วนนี้ก็ลบสินค้าโดยใช้ไอดี  แล้วก็คืนเป็น Mono<Void> เพราะไม่มีข้อมูลตอบกลับ
     }
 
     // ── 5. กรองตาม category ──────────────────────────────
@@ -98,6 +106,8 @@ public class ProductService {
         Flux<Product> matchingProducts = repository.findByCategory(category);
 
         return matchingProducts; // ← แก้บรรทัดนี้
+
+        // ส่วนนี้หาสินค้าโดยใช้ category ก็คืนเป็น Flux<Product> เพราะอาจมีหลายรายการ
     }
 
     // ── 6. คำนวณราคาหลังส่วนลด ───────────────────────────
@@ -115,5 +125,7 @@ public class ProductService {
                 return discountedPrice;
             });
         return discountedPriceMono; // ← แก้บรรทัดนี้
+
+        // ส่วนนี้จะหาราคาหลังลดแล้วก็จะไปหาสินค้าโดยใช้ไอดีก่อนแล้วค่อยคำนวณแล้วส่งออกเป็น Mono<Double> เป็นราคาที่ลดแล้ว
     }
 }
