@@ -61,7 +61,8 @@ public class ProductController {
     @GetMapping
     public Flux<Product> getAll() {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        Flux<Product> proFlux = service.getAll();
+        return proFlux; // ← แก้บรรทัดนี้
     }
 
     /**
@@ -75,7 +76,8 @@ public class ProductController {
     @PostMapping
     public Mono<Product> save(@RequestBody Product product) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        Mono<Product> prMono = service.save(product);
+        return prMono; // ← แก้บรรทัดนี้
     }
 
     /**
@@ -88,7 +90,8 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public Mono<Void> delete(@PathVariable String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        Mono<Void> delprMono = service.delete(id);
+        return delprMono; // ← แก้บรรทัดนี้
     }
 
     /**
@@ -101,7 +104,8 @@ public class ProductController {
     @GetMapping("/category/{category}")
     public Flux<Product> getByCategory(@PathVariable String category) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        Flux<Product> proFlux = service.getByCategory(category);
+        return proFlux; // ← แก้บรรทัดนี้
     }
 
     /**
@@ -114,6 +118,7 @@ public class ProductController {
     @GetMapping("/{id}/price")
     public Mono<Double> getDiscountedPrice(@PathVariable String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        Mono<Double> prdiscount = service.getDiscountedPrice(id);
+        return prdiscount; // ← แก้บรรทัดนี้
     }
 }

@@ -1,6 +1,9 @@
 package com.example.lab10.client;
 
 import com.example.lab10.model.Product;
+
+import java.sql.ClientInfoStatus;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -56,7 +59,8 @@ public class ProductWebClient {
      */
     public Flux<Product> getAllProducts() {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+    
+        return  client.get().uri("/products").retrieve().bodyToFlux(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -71,7 +75,7 @@ public class ProductWebClient {
      */
     public Mono<Product> createProduct(Product product) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.post().uri("/products").bodyValue(product).retrieve().bodyToMono(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -85,7 +89,7 @@ public class ProductWebClient {
      */
     public Mono<Void> deleteProduct(String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.delete().uri("/products/{id}", id).retrieve().bodyToMono(Void.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -99,7 +103,7 @@ public class ProductWebClient {
      */
     public Flux<Product> getByCategory(String category) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.get().uri("/products/category/{category}", category).retrieve().bodyToFlux(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -115,6 +119,6 @@ public class ProductWebClient {
      */
     public Mono<Double> getDiscountedPrice(String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.get().uri("/products/{id}/price", id).retrieve().bodyToMono(Double.class).doOnNext(price -> System.out.println("Price: "+price)); // ← แก้บรรทัดนี้
     }
 }
